@@ -16,4 +16,9 @@ public class StorageRepository : IStorageRepository
     {
         return _storage.ToArray();
     }
+
+    public void DeleteHistory()
+    {
+        _storage.Clear();
+    }
 }
