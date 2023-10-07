@@ -1,4 +1,5 @@
-﻿using Workshop.Api.Bll.Models;
+﻿using Microsoft.Extensions.Options;
+using Workshop.Api.Bll.Models;
 using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Dal.Entities;
 using Workshop.Api.Dal.Repositories;
@@ -9,13 +10,17 @@ namespace Workshop.Api.Bll.Services;
 
 public class PriceCalculatorService : IPriceCalculatorService
 {
-    private const double VolumeRatio = 3.27d;
-    private const double WeightRatio = 1.34d;
+    private readonly double _volumeRatio;
+    private readonly double _weightRatio;
 
     private readonly IStorageRepository _storageRepository;
 
-    public PriceCalculatorService(IStorageRepository storageRepository)
+    public PriceCalculatorService(
+        IOptionsSnapshot<PriceCalculatorOptions> options,
+        IStorageRepository storageRepository)
     {
+        _volumeRatio = options.Value.VolumeRatio;
+        _weightRatio = options.Value.WeightRatio;
         _storageRepository = storageRepository;
     }
 
@@ -37,17 +42,17 @@ public class PriceCalculatorService : IPriceCalculatorService
         return resultPrice;
     }
 
-    private static double CalculatePriceByVolume(GoodModel[] goods, out double volume)
+    private double CalculatePriceByVolume(GoodModel[] goods, out double volume)
     {
         volume = goods.Sum(x => x.Height * x.Length * x.Width);
-        var volumePrice = volume * VolumeRatio / 1000.0d;
+        var volumePrice = volume * _volumeRatio / 1000.0d;
         return volumePrice;
     }
 
-    private static double CalculatePriceByWeight(GoodModel[] goods, out double weight)
+    private double CalculatePriceByWeight(GoodModel[] goods, out double weight)
     {
         weight = goods.Sum(x => x.Weight);
-        var weightPrice = weight * WeightRatio / 1000.0d;
+        var weightPrice = weight * _weightRatio / 1000.0d;
         return weightPrice;
     }
 
