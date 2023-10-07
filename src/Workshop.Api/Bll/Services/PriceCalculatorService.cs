@@ -56,7 +56,7 @@ public class PriceCalculatorService : IPriceCalculatorService
         return weightPrice;
     }
 
-    public CalculatetionLogModel[] QueryLog(int take)
+    public CalculationLogModel[] QueryLog(int take)
     {
         if (take < 0)
         {
@@ -67,7 +67,7 @@ public class PriceCalculatorService : IPriceCalculatorService
             .OrderByDescending(x => x.At)
             .Take(take)
             .ToArray();
-        return log.Select(x => new CalculatetionLogModel(
+        return log.Select(x => new CalculationLogModel(
                 x.Volume,
                 x.Price,
                 x.Weight))

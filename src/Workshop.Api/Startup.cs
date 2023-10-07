@@ -3,6 +3,7 @@ using Workshop.Api.Bll.Services;
 using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Dal.Repositories;
 using Workshop.Api.Dal.Repositories.Interfaces;
+using Workshop.Api.HostedServices;
 
 namespace Workshop.Api;
 
@@ -32,6 +33,9 @@ public sealed class Startup
         services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
         services.AddSingleton<IStorageRepository, StorageRepository>();
         services.AddScoped<IAnalyseDataService, AnalyseDataService>();
+        services.AddSingleton<IGoodRepository, GoodRepository>();
+        services.AddHostedService<GoodSyncHostedService>();
+        services.AddSingleton<IGoodsService, GoodsService>();
     }
 
     public void Configure(IHostEnvironment environment, IApplicationBuilder app)
