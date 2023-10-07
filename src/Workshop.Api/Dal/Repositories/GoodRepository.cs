@@ -19,4 +19,9 @@ public sealed class GoodRepository : IGoodRepository
     {
         return _store.Select(x => x.Value).ToArray();
     }
+
+    public GoodEntity Get(int id)
+    {
+        return _store[id];
+    }
 }

@@ -1,8 +1,11 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Workshop.Api.ActionFilters;
 using Workshop.Api.Bll.Models;
 using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Requests.V3;
 using Workshop.Api.Responses.V3;
+using Workshop.Api.Validators;
 
 namespace Workshop.Api.Controllers.V3;
 
@@ -20,10 +23,13 @@ public class DeliveryPriceController : ControllerBase
         _analyseDataService = analyseDataService;
     }
 
+    [ExceptionFilter]
     [HttpPost("calculate")]
-    public CalculateResponse Calculate(CalculateRequest request)
+    public async Task<CalculateResponse> Calculate(CalculateRequest request)
     {
-        var result =
+        var validator = new CalculatorRequestValidator();
+        await validator.ValidateAndThrowAsync(request);
+        var price =
             _priceCalculatorService.CalculatePrice(
                 request.Goods
                     .Select(x => new GoodModel(
@@ -32,7 +38,7 @@ public class DeliveryPriceController : ControllerBase
                         x.Width,
                         x.Weight))
                     .ToArray(), request.distance);
-        return new CalculateResponse(result);
+        return new CalculateResponse(price);
     }
 
     [HttpPost("get-history")]
@@ -43,7 +49,7 @@ public class DeliveryPriceController : ControllerBase
                 new CargoResponse(
                     x.Volume,
                     x.Weight),
-                    x.Price))
+                x.Price))
             .ToArray();
     }
 

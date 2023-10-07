@@ -1,9 +1,12 @@
+using System.Net;
+using Workshop.Api.ActionFilters;
 using Workshop.Api.Bll;
 using Workshop.Api.Bll.Services;
 using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Dal.Repositories;
 using Workshop.Api.Dal.Repositories.Interfaces;
 using Workshop.Api.HostedServices;
+using Workshop.Api.Middlewares;
 
 namespace Workshop.Api;
 
@@ -24,6 +27,17 @@ public sealed class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        //для решения проблемы с неймингом во время деcериализиции
+        //services.AddMcv().AddJsonOptions(x => x.JsonSerializerOptions...
+        services.AddMvc()
+            .AddMvcOptions(x =>
+            {
+                x.Filters.Add(new ExceptionFilterAttribute());
+                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.BadRequest));
+                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.InternalServerError));
+                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.OK));
+
+            });//навесили фильтры на все приложение
         services.Configure<PriceCalculatorOptions>(_configuration.GetSection("PriceCalculatorOptions"));
         services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -48,7 +62,14 @@ public sealed class Startup
         }
 
         app.UseRouting();
-
+        app.UseMiddleware<ErrorMiddleware>();
+        //для десериализации
+        //позволяет читать ответ несколько раз
+        /*app.Use(async (context, next) =>
+        {
+            context.Request.EnableBuffering();
+            await next.Invoke();
+        });*/
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }
