@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Workshop.Api.ActionFilters;
 using Workshop.Api.Bll;
 using Workshop.Api.Bll.Services;
@@ -50,6 +51,7 @@ public sealed class Startup
         services.AddSingleton<IGoodRepository, GoodRepository>();
         services.AddHostedService<GoodSyncHostedService>();
         services.AddSingleton<IGoodsService, GoodsService>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     public void Configure(IHostEnvironment environment, IApplicationBuilder app)
@@ -65,11 +67,20 @@ public sealed class Startup
         app.UseMiddleware<ErrorMiddleware>();
         //для десериализации
         //позволяет читать ответ несколько раз
-        /*app.Use(async (context, next) =>
+        app.Use(async (context, next) =>
         {
             context.Request.EnableBuffering();
             await next.Invoke();
-        });*/
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        });
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapDefaultControllerRoute(); //для подключения view
+            endpoints.MapControllerRoute("goods-page", "goods-page", new
+            {
+                Controller = "GoodsView",
+                Action = "Index"
+            });
+        });
     }
 }

@@ -1,0 +1,13 @@
+@model Workshop.Api.ViewModels.GoodsPageViewModel;
+
+<h2> Header </h2>
+<ul>
+    @foreach (var x in Model.Goods)
+    {
+        <li>
+            <p>@x.Name</p>
+            <p>@x.Count</p>
+            <p><a href = "/goods/@x.Id">Стоимость</a></p>
+        </li>
+    }
+</ul>

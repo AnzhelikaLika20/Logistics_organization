@@ -11,6 +11,7 @@ namespace Workshop.Api.Controllers.V3;
 
 [ApiController]
 [Route("goods")]
+
 public class GoodsController : Controller
 {
     private readonly IGoodRepository _repository;
@@ -26,7 +27,7 @@ public class GoodsController : Controller
         _httpContextAccessor = httpContextAccessor;
     }
 
-    [HttpGet]
+    [HttpGet("calculate")]
     public ICollection<GoodEntity> GetAll()
     {
         return _repository.GetAll();
@@ -38,7 +39,6 @@ public class GoodsController : Controller
             priceCalculatorService,
         int id)
     {
-        
         //если удалить параметры метода, и сериализовать запрос ниже, тк Body читается только один раз(те во время запроса)
         /*
         _httpContextAccessor.HttpContext.Request.Body.Seek(0, SeekOrigin.Begin);
@@ -47,7 +47,7 @@ public class GoodsController : Controller
         _logger.LogInformation(bodyString);
         var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         var request = JsonSerializer.Deserialize<CalculateResponse>(bodyString, options);*/
-        
+
         var good = _repository.Get(id);
         var model = new GoodModel(
             good.Height,
