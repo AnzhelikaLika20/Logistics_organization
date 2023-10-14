@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Workshop.Domain.DependencyInjection.Extensions\Workshop.Domain.DependencyInjection.Extensions.csproj" />
     <ProjectReference Include="..\Workshop.Infrastructure\Workshop.Infrastructure.csproj" />
   </ItemGroup>
 

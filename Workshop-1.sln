@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workshop.Domain", "src\Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workshop.Infrastructure", "src\Workshop.Infrastructure\Workshop.Infrastructure.csproj", "{A9E7EB59-372A-48B2-BF63-6FB31FF0511E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workshop.Domain.DependencyInjection.Extensions", "src\Workshop.Domain.DependencyInjection.Extensions\Workshop.Domain.DependencyInjection.Extensions.csproj", "{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +34,15 @@ Global
 		{A9E7EB59-372A-48B2-BF63-6FB31FF0511E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E7EB59-372A-48B2-BF63-6FB31FF0511E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E7EB59-372A-48B2-BF63-6FB31FF0511E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4B63A680-D184-478C-A5F4-EC12ABFF50FB} = {2C330BE3-4759-4A96-9EE7-EF897B842D2B}
 		{4D9C3DE9-CE81-48E5-89F8-0A53E56141E0} = {2C330BE3-4759-4A96-9EE7-EF897B842D2B}
 		{A9E7EB59-372A-48B2-BF63-6FB31FF0511E} = {2C330BE3-4759-4A96-9EE7-EF897B842D2B}
+		{93BFF2C4-E18B-4DBC-83AC-4A2D235453C9} = {2C330BE3-4759-4A96-9EE7-EF897B842D2B}
 	EndGlobalSection
 EndGlobal

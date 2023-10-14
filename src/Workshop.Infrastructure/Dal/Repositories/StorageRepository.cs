@@ -3,7 +3,7 @@ using Workshop.Domain.Separated;
 
 namespace Workshop.Infrastructure.Dal.Repositories;
 
-public class StorageRepository : IStorageRepository
+internal sealed class StorageRepository : IStorageRepository
 {
     private readonly List<StorageEntity> _storage = new ();
     

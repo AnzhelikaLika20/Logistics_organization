@@ -3,7 +3,7 @@ using Workshop.Domain.Separated;
 
 namespace Workshop.Infrastructure.Dal.Repositories;
 
-public sealed class GoodRepository : IGoodRepository
+internal sealed class GoodRepository : IGoodRepository
 {
     private readonly Dictionary<int, GoodEntity> _store = new();
 

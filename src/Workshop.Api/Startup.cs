@@ -5,6 +5,7 @@ using Workshop.Api.ActionFilters;
 using Workshop.Api.HostedServices;
 using Workshop.Api.Middlewares;
 using Workshop.Domain;
+using Workshop.Domain.DependencyInjection.Extensions;
 using Workshop.Domain.Separated;
 using Workshop.Domain.Services;
 using Workshop.Domain.Services.Interfaces;
@@ -19,7 +20,7 @@ public sealed class Startup
     private readonly IHostEnvironment _hostEnvironment;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public Startup(IConfiguration configuration, 
+    public Startup(IConfiguration configuration,
         IHostEnvironment hostEnvironment,
         IWebHostEnvironment webHostEnvironment)
     {
@@ -32,32 +33,25 @@ public sealed class Startup
     {
         //для решения проблемы с неймингом во время деcериализиции
         //services.AddMcv().AddJsonOptions(x => x.JsonSerializerOptions...
-        services.AddMvc()
-            .AddMvcOptions(x =>
-            {
-                x.Filters.Add(new ExceptionFilterAttribute());
-                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.BadRequest));
-                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.InternalServerError));
-                x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.OK));
+        services
+            .AddDomain(_configuration)
+            .AddInfrastructure()
+            .AddControllers()
+            .AddMvcOptions(ConfigureMvc)
+            .Services
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen(a => { a.CustomSchemaIds(x => x.FullName); })
+            .AddScoped<IAnalyseDataService, AnalyseDataService>()
+            .AddHostedService<GoodSyncHostedService>().AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    }
 
-            });//навесили фильтры на все приложение
-        services.Configure<PriceCalculatorOptions>(_configuration.GetSection("PriceCalculatorOptions"));
-        services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        services.AddEndpointsApiExplorer();
-        //Avoiding name conflicts in swagger 
-        services.AddSwaggerGen(a => { a.CustomSchemaIds(x => x.FullName); });
-        services.AddScoped<IPriceCalculatorService, PriceCalculatorService>(x =>
-        {
-            var options = x.GetRequiredService<IOptionsSnapshot<PriceCalculatorOptions>>().Value;
-            return new PriceCalculatorService(options, x.GetRequiredService<IStorageRepository>());
-        });
-        services.AddSingleton<IStorageRepository, StorageRepository>();
-        services.AddScoped<IAnalyseDataService, AnalyseDataService>();
-        services.AddSingleton<IGoodRepository, GoodRepository>();
-        services.AddHostedService<GoodSyncHostedService>();
-        services.AddSingleton<IGoodsService, GoodsService>();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    private static void ConfigureMvc(MvcOptions x)
+    {
+        x.Filters.Add(new ExceptionFilterAttribute());
+        x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.BadRequest));
+        x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.InternalServerError));
+        x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.OK));
+        //навесили фильтры на все приложение
     }
 
     public void Configure(IHostEnvironment environment, IApplicationBuilder app)

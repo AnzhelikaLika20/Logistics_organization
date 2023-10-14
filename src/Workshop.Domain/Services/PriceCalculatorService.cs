@@ -6,7 +6,7 @@ using Workshop.Domain.Services.Interfaces;
 
 namespace Workshop.Domain.Services;
 
-public class PriceCalculatorService : IPriceCalculatorService
+internal sealed class PriceCalculatorService : IPriceCalculatorService
 {
     private readonly double _volumeRatio;
     private readonly double _weightRatio;
