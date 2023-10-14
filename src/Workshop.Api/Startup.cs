@@ -1,13 +1,15 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Workshop.Api.ActionFilters;
-using Workshop.Api.Bll;
-using Workshop.Api.Bll.Services;
-using Workshop.Api.Bll.Services.Interfaces;
-using Workshop.Api.Dal.Repositories;
-using Workshop.Api.Dal.Repositories.Interfaces;
 using Workshop.Api.HostedServices;
 using Workshop.Api.Middlewares;
+using Workshop.Domain;
+using Workshop.Domain.Separated;
+using Workshop.Domain.Services;
+using Workshop.Domain.Services.Interfaces;
+using Workshop.Infrastructure;
+using Workshop.Infrastructure.Dal.Repositories;
 
 namespace Workshop.Api;
 
@@ -45,7 +47,11 @@ public sealed class Startup
         services.AddEndpointsApiExplorer();
         //Avoiding name conflicts in swagger 
         services.AddSwaggerGen(a => { a.CustomSchemaIds(x => x.FullName); });
-        services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
+        services.AddScoped<IPriceCalculatorService, PriceCalculatorService>(x =>
+        {
+            var options = x.GetRequiredService<IOptionsSnapshot<PriceCalculatorOptions>>().Value;
+            return new PriceCalculatorService(options, x.GetRequiredService<IStorageRepository>());
+        });
         services.AddSingleton<IStorageRepository, StorageRepository>();
         services.AddScoped<IAnalyseDataService, AnalyseDataService>();
         services.AddSingleton<IGoodRepository, GoodRepository>();

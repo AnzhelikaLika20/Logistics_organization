@@ -2,10 +2,10 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Workshop.Api.ActionFilters;
 using Workshop.Api.Bll.Models;
-using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Requests.V3;
 using Workshop.Api.Responses.V3;
 using Workshop.Api.Validators;
+using Workshop.Domain.Services.Interfaces;
 
 namespace Workshop.Api.Controllers.V3;
 

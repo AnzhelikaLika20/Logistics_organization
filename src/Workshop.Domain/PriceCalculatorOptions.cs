@@ -1,4 +1,4 @@
-namespace Workshop.Api.Bll;
+namespace Workshop.Domain;
 
 public sealed class PriceCalculatorOptions
 {

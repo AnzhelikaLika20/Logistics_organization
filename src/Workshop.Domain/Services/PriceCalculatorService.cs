@@ -1,12 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Workshop.Api.Bll;
 using Workshop.Api.Bll.Models;
-using Workshop.Api.Bll.Services.Interfaces;
-using Workshop.Api.Dal.Entities;
-using Workshop.Api.Dal.Repositories;
-using Workshop.Api.Dal.Repositories.Interfaces;
-using Workshop.Api.Requests.V3;
+using Workshop.Domain.Entities;
+using Workshop.Domain.Separated;
+using Workshop.Domain.Services.Interfaces;
 
-namespace Workshop.Api.Bll.Services;
+namespace Workshop.Domain.Services;
 
 public class PriceCalculatorService : IPriceCalculatorService
 {
@@ -16,11 +14,11 @@ public class PriceCalculatorService : IPriceCalculatorService
     private readonly IStorageRepository _storageRepository;
 
     public PriceCalculatorService(
-        IOptionsSnapshot<PriceCalculatorOptions> options,
+        PriceCalculatorOptions options,
         IStorageRepository storageRepository)
     {
-        _volumeRatio = options.Value.VolumeRatio;
-        _weightRatio = options.Value.WeightRatio;
+        _volumeRatio = options.VolumeRatio;
+        _weightRatio = options.WeightRatio;
         _storageRepository = storageRepository;
     }
 

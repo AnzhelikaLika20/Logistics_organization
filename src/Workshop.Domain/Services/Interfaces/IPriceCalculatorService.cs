@@ -1,6 +1,6 @@
 ﻿using Workshop.Api.Bll.Models;
 
-namespace Workshop.Api.Bll.Services.Interfaces;
+namespace Workshop.Domain.Services.Interfaces;
 
 public interface IPriceCalculatorService
 {

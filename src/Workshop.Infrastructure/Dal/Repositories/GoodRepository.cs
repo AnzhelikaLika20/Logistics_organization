@@ -1,7 +1,7 @@
-using Workshop.Api.Dal.Entities;
-using Workshop.Api.Dal.Repositories.Interfaces;
+using Workshop.Domain.Entities;
+using Workshop.Domain.Separated;
 
-namespace Workshop.Api.Dal.Repositories;
+namespace Workshop.Infrastructure.Dal.Repositories;
 
 public sealed class GoodRepository : IGoodRepository
 {

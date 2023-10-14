@@ -1,4 +1,4 @@
-namespace Workshop.Api.Bll.Services.Interfaces;
+namespace Workshop.Domain.Services.Interfaces;
 
 public interface IAnalyseDataService
 {

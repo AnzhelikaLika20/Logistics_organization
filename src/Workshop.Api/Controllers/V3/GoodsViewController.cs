@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Workshop.Api.Dal.Repositories.Interfaces;
 using Workshop.Api.ViewModels;
+using Workshop.Domain.Separated;
 
 namespace Workshop.Api.Controllers.V3;
 

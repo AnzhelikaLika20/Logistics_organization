@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.DataProtection.XmlEncryption;
-using Workshop.Api.Bll.Services.Interfaces;
-using Workshop.Api.Dal.Repositories.Interfaces;
+using Workshop.Domain.Separated;
+using Workshop.Domain.Services.Interfaces;
 
-namespace Workshop.Api.Bll.Services;
+namespace Workshop.Domain.Services;
 
 public class AnalyseDataService : IAnalyseDataService
 {

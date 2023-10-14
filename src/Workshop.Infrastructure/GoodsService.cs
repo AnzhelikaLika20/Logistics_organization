@@ -1,6 +1,7 @@
-using Workshop.Api.Dal.Entities;
+using Workshop.Domain.Entities;
+using Workshop.Domain.Services.Interfaces;
 
-namespace Workshop.Api.Bll.Services
+namespace Workshop.Infrastructure
 {
 
     public class GoodsService : IGoodsService

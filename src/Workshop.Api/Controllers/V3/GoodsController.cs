@@ -1,11 +1,10 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Workshop.Api.Bll.Models;
-using Workshop.Api.Bll.Services;
-using Workshop.Api.Bll.Services.Interfaces;
-using Workshop.Api.Dal.Entities;
-using Workshop.Api.Dal.Repositories.Interfaces;
 using Workshop.Api.Responses.V3;
+using Workshop.Domain.Entities;
+using Workshop.Domain.Separated;
+using Workshop.Domain.Services.Interfaces;
 
 namespace Workshop.Api.Controllers.V3;
 

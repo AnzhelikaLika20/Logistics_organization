@@ -1,5 +1,5 @@
-using Workshop.Api.Bll.Services;
-using Workshop.Api.Dal.Repositories.Interfaces;
+using Workshop.Domain.Separated;
+using Workshop.Domain.Services.Interfaces;
 
 namespace Workshop.Api.HostedServices;
 

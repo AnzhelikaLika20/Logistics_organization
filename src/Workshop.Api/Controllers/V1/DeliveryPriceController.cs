@@ -1,9 +1,9 @@
 using System.Security.Cryptography.Xml;
 using Microsoft.AspNetCore.Mvc;
 using Workshop.Api.Bll.Models;
-using Workshop.Api.Bll.Services.Interfaces;
 using Workshop.Api.Requests.V1;
 using Workshop.Api.Responses.V1;
+using Workshop.Domain.Services.Interfaces;
 
 namespace Workshop.Api.Controllers.V1;
 
